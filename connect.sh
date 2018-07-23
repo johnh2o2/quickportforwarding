@@ -9,7 +9,7 @@
 
 # defaults
 mode='connect'
-portlist='ports_to_connect.txt'
+portlist='ports.txt'
 port=''
 host=''
 
@@ -19,7 +19,7 @@ usage() {
     echo ""
     echo "options"
     echo "  -h, --help          show this usage page"
-    echo "  -r, --reconnect     reconnect ports"
+    echo "  -r, --reset         reset connections"
     echo "  -d, --disconnect    disconnect ports"
     echo "  -c, --connect       connect ports"
     echo "  -l, --list          port list file"
@@ -40,7 +40,7 @@ process() {
         disconnect)
             disconnect_port $port
             ;;
-        reconnect)
+        reset)
             disconnect_port $port
             connect_port $port $host
             ;;
@@ -58,8 +58,8 @@ while [[ $# -gt 0 ]]; do
         -h|--help)
             usage
             ;;
-        -r|--reconnect)
-            mode='reconnect'
+        -r|--reset)
+            mode='reset'
             shift
             ;;
         -c|--connect)
