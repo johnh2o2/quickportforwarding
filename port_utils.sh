@@ -1,3 +1,8 @@
+#!/bin/bash
+#
+# Utilities for connecting/disconnecting ports over ssh
+# (c) 2018 John Hoffman
+
 
 is_connected() {
     port=${1}
