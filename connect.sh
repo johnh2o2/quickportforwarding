@@ -4,9 +4,6 @@
 # (c) 2018 John Hoffman
 # MIT license
 
-# utils
-. port_utils.sh
-
 # defaults
 mode='connect'
 portlist='ports.txt'
