@@ -4,9 +4,11 @@
 # (c) 2018 John Hoffman
 # MIT license
 
+VERSION="0.1.0"
+
 # defaults
 mode='connect'
-portlist='ports.txt'
+portlist=$DEFAULT_PORT_LIST
 port=''
 host=''
 
@@ -16,6 +18,7 @@ usage() {
     echo ""
     echo "options"
     echo "  -h, --help          show this usage page"
+    echo "  --version           show version information"
     echo "  -r, --reset         reset connections"
     echo "  -d, --disconnect    disconnect ports"
     echo "  -c, --connect       connect ports"
@@ -25,7 +28,12 @@ usage() {
     exit 1
 }
 
+version() {
+    echo "portconn v${VERSION}, (c) John Hoffman 2018"
+    exit 1
+}
 
+# test if port is connected
 is_connected() {
     port=${1}
     for pid in `pgrep -f "ssh -fNT -L $port"`; do
@@ -35,6 +43,7 @@ is_connected() {
     done
 }
 
+# kill the ssh instance for a specified port
 disconnect_port(){
     port=${1}
     for pid in `pgrep -f "ssh -fNT -L $port"`; do
@@ -47,7 +56,8 @@ disconnect_port(){
     done
 }
 
-connect_port(){
+# forward port from (port, host) -> localhost:port
+forward_port(){
     port=${1}
     host=${2}
     if [[ $(is_connected $port) == "connected" ]]; then
@@ -65,14 +75,14 @@ process() {
 
     case $mode in
         connect)
-            connect_port $port $host
+            forward_port $port $host
             ;;
         disconnect)
             disconnect_port $port
             ;;
         reset)
             disconnect_port $port
-            connect_port $port $host
+            forward_port $port $host
             ;;
         *)
             echo "Don't understand mode = '${mode}'"
@@ -85,6 +95,9 @@ process() {
 while [[ $# -gt 0 ]]; do
     key=$1
     case $key in
+        --version)
+            version
+            ;;
         -h|--help)
             usage
             ;;
@@ -132,6 +145,7 @@ if [[ $port != '' ]]; then
 
 # multiple (port, host) from list
 else
+    echo "Reading ports from $portlist..."
     while read port host; do
         process $port $host
     done < $portlist
