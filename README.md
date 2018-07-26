@@ -29,20 +29,20 @@ ssh -fNT -L <port>:localhost:<port> <host>
 For a single port/host, just run
 
 ```bash
-$ bash connect.sh --port 7777 --host crouton
+$ bash portconn --port 7777 --host crouton
 == forwarding 7777@crouton -> localhost:7777  ==
 ```
 to connect port 7777 on the host "crouton" (can be any host understood by `ssh`).
 
 Otherwise, to disconnect port 7777:
 ```bash
-$ bash connect.sh --port 7777 --host crouton --disconnect
+$ bash portconn --port 7777 --host crouton --disconnect
 [port 7777] killing pid 10616
 ```
 Or to reset the connection (basically disconnect followed by connect)
 
 ```bash
-$ bash connect.sh --port 7777 --host crouton --reset
+$ bash portconn --port 7777 --host crouton --reset
 [port 7777] killing pid 10667
 == forwarding 7777@crouton -> localhost:7777  ==
 ```
@@ -63,20 +63,20 @@ where `hostname`(s) must be understandable by `ssh`.
 Then forward all of these to `localhost` 
 
 ```bash
-bash connect.sh --list ports.txt
+bash portconn --list ports.txt
 ```
 
 or reset the connections:
 
 
 ```bash
-bash connect.sh --list ports.txt --reset
+bash portconn --list ports.txt --reset
 ```
 
 or disconnect them:
 
 ```bash
-bash connect.sh --list ports.txt --disconnect
+bash portconn --list ports.txt --disconnect
 ```
 
 
