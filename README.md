@@ -2,6 +2,20 @@
 
 A convenience script for forwarding a set of ports over ssh.
 
+## Install
+
+To install the script, run 
+
+```bash
+sudo bash install.sh
+```
+
+from the parent directory. This will copy the `portconn` script
+to `/usr/local/bin`. The installation location can be changed by
+editing the `$PREFIX` variable in the `install.sh` file.
+
+The `DEFAULT_PORT_LIST` can also be changed in the `install.sh` script.
+
 ## Usage
 
 This script basically wraps around the following `ssh` command:
